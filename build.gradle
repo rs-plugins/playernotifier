@@ -1,0 +1,37 @@
+plugins {
+	id 'com.github.johnrengelman.shadow' version '5.1.0'
+	id 'java-library'
+	id 'maven'
+	id "com.github.ben-manes.versions" version "0.22.0" apply false
+}
+
+group = "com.runeliteplus"
+description = "Flexo External Plugin"
+version = "1.0.0"
+
+task fatJar(type: Jar) {
+	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+	with jar
+}
+
+repositories {
+	jcenter()
+	maven { url "https://jitpack.io" }
+}
+
+dependencies {
+	compile group: 'org.slf4j', name:'slf4j-api', version: '1.7.2'
+	compileOnly group: 'com.google.inject', name: 'guice', version: '4.2.2', classifier: 'no_aop'
+	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
+	compileOnly group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.2.10'
+	testCompileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
+	annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
+	testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
+	implementation 'com.github.runelite-extended:runelite:c8a15b713e7166ed78d359a23da6b19b7bf5d96e'
+}
+
+ext {
+	fernflower = '07082019'
+	logback = '1.2.3'
+	lombok = '1.18.8'
+}
